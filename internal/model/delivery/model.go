@@ -48,10 +48,10 @@ func (entity Common) Id() uint64 {
 }
 
 var CommonStorage = []Common{
-	{id: 1, Order: 9, Status: Status(InWay), Receiver: 34, Courier: 111, Location: 1, Time: time.Now(), Notes: ""},
-	{id: 2, Order: 8, Status: Status(Completion), Receiver: 22, Courier: 222, Location: 6, Time: time.Now(), Notes: ""},
-	{id: 3, Order: 7, Status: Status(Processed), Receiver: 78, Courier: 333, Location: 3, Time: time.Now(), Notes: ""},
-	{id: 4, Order: 6, Status: Status(Delivered), Receiver: 87, Courier: 111, Location: 4, Time: time.Now(), Notes: ""},
+	{id: 1, Order: 9, Status: InWay, Receiver: 34, Courier: 111, Location: 1, Time: time.Now(), Notes: ""},
+	{id: 2, Order: 8, Status: Completion, Receiver: 22, Courier: 222, Location: 6, Time: time.Now(), Notes: ""},
+	{id: 3, Order: 7, Status: Processed, Receiver: 78, Courier: 333, Location: 3, Time: time.Now(), Notes: ""},
+	{id: 4, Order: 6, Status: Delivered, Receiver: 87, Courier: 111, Location: 4, Time: time.Now(), Notes: ""},
 }
 
 var Sequence = CommonStorage[len(CommonStorage)-1].id

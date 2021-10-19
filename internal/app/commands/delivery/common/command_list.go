@@ -6,10 +6,14 @@ import (
 )
 
 func (c DummyCommonCommander) List(inputMsg *tgbotapi.Message) {
-	outputMsgText := "***Here are deliveries***:\n\n"
-
 	cursor := 0
-	deliveries, _ := c.commonService.List(uint64(cursor), uint64(pageSize))
+	deliveries, err := c.commonService.List(uint64(cursor), uint64(pageSize))
+	if err != nil {
+		log.Printf("DummyCommonCommander.List: error getting delivery list - %v", err)
+		return
+	}
+
+	outputMsgText := "***Here are deliveries***:\n\n"
 	for _, delivery := range deliveries {
 		outputMsgText += delivery.String() + "\n\n"
 	}
@@ -18,7 +22,7 @@ func (c DummyCommonCommander) List(inputMsg *tgbotapi.Message) {
 	msg.ParseMode = "markdown"
 	generatePaginationButtons(cursor, &c, &msg)
 
-	_, err := c.bot.Send(msg)
+	_, err = c.bot.Send(msg)
 	if err != nil {
 		log.Printf("DummyCommonCommander.List: error sending reply message to chat - %v", err)
 	}

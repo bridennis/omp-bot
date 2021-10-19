@@ -2,7 +2,6 @@ package common
 
 import (
 	"errors"
-	"fmt"
 	"github.com/ozonmp/omp-bot/internal/model/delivery"
 )
 
@@ -23,8 +22,7 @@ func NewDummyCommonService() *DummyCommonService {
 func (s DummyCommonService) Describe(commonId uint64) (*delivery.Common, error) {
 	index, err := storageIndexById(commonId)
 	if err != nil {
-		errUnknownCommonIdentifier := errors.New(fmt.Sprintf("Wrong delivery id %d", commonId))
-		return &delivery.Common{}, errUnknownCommonIdentifier
+		return nil, err
 	}
 
 	return &delivery.CommonStorage[index], nil
@@ -55,8 +53,7 @@ func (s DummyCommonService) Create(common delivery.Common) (uint64, error) {
 func (s DummyCommonService) Update(commonId uint64, subdomain delivery.Common) error {
 	index, err := storageIndexById(commonId)
 	if err != nil {
-		errUnknownCommonIdentifier := errors.New(fmt.Sprintf("Wrong delivery id %d", commonId))
-		return errUnknownCommonIdentifier
+		return err
 	}
 
 	subdomain.SetId(commonId)
@@ -68,8 +65,7 @@ func (s DummyCommonService) Update(commonId uint64, subdomain delivery.Common) e
 func (s DummyCommonService) Remove(commonId uint64) (bool, error) {
 	index, err := storageIndexById(commonId)
 	if err != nil {
-		errUnknownCommonIdentifier := errors.New(fmt.Sprintf("Wrong delivery id %d", commonId))
-		return false, errUnknownCommonIdentifier
+		return false, err
 	}
 
 	delivery.CommonStorage = append(delivery.CommonStorage[:index], delivery.CommonStorage[index+1:]...)

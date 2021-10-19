@@ -22,10 +22,14 @@ func (c *DummyCommonCommander) CallbackList(callback *tgbotapi.CallbackQuery, ca
 		return
 	}
 
-	outputMsgText := "***Here are deliveries***:\n\n"
-
 	cursor := parsedData.Offset
-	deliveries, _ := c.commonService.List(uint64(cursor), uint64(pageSize))
+	deliveries, err := c.commonService.List(uint64(cursor), uint64(pageSize))
+	if err != nil {
+		log.Printf("DummyCommonCommander.CallbackList: error getting delivery list - %v", err)
+		return
+	}
+
+	outputMsgText := "***Here are deliveries***:\n\n"
 	for _, delivery := range deliveries {
 		outputMsgText += delivery.String() + "\n\n"
 	}

@@ -80,5 +80,5 @@ func storageIndexById(commonId uint64) (int, error) {
 		}
 	}
 
-	return -1, errors.New("id was not found")
+	return 0, errors.New("id was not found")
 }
